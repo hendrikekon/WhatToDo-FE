@@ -18,22 +18,16 @@ export const errorFetchingTodos = (error) => ({
 
 const debouncedFetchTodos = debounce(getTodos, 1000);
 
-export const fetchTodos = () => {
+export const fetchTodos = (token) => {
     return async (dispatch) => {
-        dispatch(startFetchingTodos())
+        dispatch(startFetchingTodos());
         try {
-
-            const response = await debouncedFetchTodos();
-            if (response.data && response.count !== undefined) {
-
-                dispatch(successFetchingTodos({ data: response.data }));
-            } else {
-                throw new Error('Invalid response structure');
-            }
-
+            const todos = await debouncedFetchTodos(token);
+            dispatch(successFetchingTodos(todos));
         } catch (error) {
-            console.error('Error fetching todos:', error);
+            console.error("Error fetching todos:", error);
             dispatch(errorFetchingTodos(error));
         }
-    }
-}
+    };
+};
+

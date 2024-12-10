@@ -29,6 +29,7 @@ const Account = ({ setIsLoggedIn }) => {
         };
     }, []);
     if(!profile) return <p>Loading...</p>;
+
     const handleAccountClick = () =>{
         setShowPopup(!showPopup)
     }
@@ -52,7 +53,7 @@ const Account = ({ setIsLoggedIn }) => {
     const cancelLogout = () => setShowConfirm(false);
 
     // handle link
-const handleOrderClick = () => {
+const handleStatusClick = () => {
     navigate('/order')
 }
 
@@ -73,13 +74,12 @@ const handleAccountDetailClick = () => {
                     <ul>
                         <li>
                         <button className="account-profile">
-                            <p className="account-name">{profile.us_name}</p>
-                            <p className="account-email">{profile.us_email}</p>
+                            <p className="account-name">{profile.username}</p>
                         </button>
                         </li>
                         <div className="horizontal-line"></div>
                         <li><button onClick={handleAccountDetailClick} className="account-account">Account</button></li>
-                        <li><button onClick={handleOrderClick} className="account-order">Order List</button></li>
+                        <li><button onClick={handleStatusClick} className="account-status">Status List</button></li>
                         <li><button className="account-feedback">Give feedback</button></li>
                         <li><button className="account-about">About</button></li>
                         <li><button className="account-logout" onClick={confirmLogout}>Sign out</button></li>

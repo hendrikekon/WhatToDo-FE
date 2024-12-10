@@ -1,18 +1,21 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import './index.css';
-import { useDispatch} from "react-redux";
+import { useDispatch, useSelector} from "react-redux";
 import imglogo from '../../assets/img/logo1.png';
 import Account from "../../components/Account";
 import { fetchTodos } from "../../app/features/Todo/actions";
 
 const Navbar = ({isLoggedIn, setIsLoggedIn}) => {
     const dispatch = useDispatch();
+    const token = useSelector(state => state.auth.token);
+
 
     const handleMenu = () => {
-        dispatch(fetchTodos());
-
-      };
+        if(isLoggedIn && token){
+            dispatch(fetchTodos(token));
+        }
+    };
 
     return(
         <div className="navbar-container">
@@ -22,7 +25,7 @@ const Navbar = ({isLoggedIn, setIsLoggedIn}) => {
                     <h4 className="navbar-brand">
                         <img src={imglogo} alt="Logo" className="imgLogo" />
                         <NavLink to="/" onClick={() => handleMenu} className="linkMenu">                        
-                            Eduwork-Store
+                            WhatToDo?
                         </NavLink>
                     </h4>
                 </div>

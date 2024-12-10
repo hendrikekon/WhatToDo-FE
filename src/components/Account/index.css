@@ -69,10 +69,6 @@
     border: 0;
     background-color: #fff;
 }
-/* .account-profile :hover{
-    background-color: #c7c7c7;
-    transition: background-color 0.3s ease;
-} */
 .account-name{
     justify-content: flex-start;
     font-size: 14;
@@ -116,7 +112,7 @@
     border: 0;
     background-color: white;
 }
-.account-order{
+.account-status{
     text-align: start;
     justify-content: flex-start;
     align-items: center;
@@ -167,7 +163,7 @@
     background-color: #c7c7c7;
     transition: background-color 0.5s ease;
 }
-.account-order:hover{
+.account-status:hover{
     cursor: pointer;
     background-color: #c7c7c7;
     transition: background-color 0.5s ease;

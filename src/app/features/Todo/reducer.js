@@ -17,7 +17,7 @@ export default function todosReducer(state = initialState, {type, payload}) {
         case START_FETCHING_TODOS:
             return {...state, status: statusList.process};
         case SUCCESS_FETCHING_TODOS:
-            return {...state, status: statusList.success, data: payload.data};
+            return {...state, status: statusList.success, data: payload};
         case ERROR_FETCHING_TODOS:
             return {...state, status: statusList.error};
         default:
