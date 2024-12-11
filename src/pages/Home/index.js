@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
-import { fetchTodos } from "../../app/features/Todo/actions";
+import { addTodo, changeTodo, fetchTodos, removeTodo } from "../../app/features/Todo/actions";
 import { useDispatch, useSelector } from "react-redux";
 import './index.css';
+import Swal from 'sweetalert2';
 
 
 const Home = ({isLoggedIn}) => {
@@ -10,12 +11,75 @@ const Home = ({isLoggedIn}) => {
     const isLoading = useSelector(state => state.todos.status) === 'process';
     const noTodosFound = useSelector(state => state.todos.noProductsFound);
     const token = useSelector(state => state.auth.token || null);
+    const [newTodo, setNewTodo] = React.useState('');
 
     useEffect(() => {
         if(isLoggedIn && token){
             dispatch(fetchTodos(token));
         }
     }, [dispatch, isLoggedIn, token]);
+
+    const handleAddTodo = () => {
+        if (isLoggedIn && token) {
+            const data = {
+                name: newTodo,
+                done: false,
+            };
+            console.log('Home: ', data);
+            dispatch(addTodo(token, data));
+            Swal.fire({
+                title: 'Task Added!',
+                text: 'Your task has been Added.',
+                icon: 'success',
+            });
+            setNewTodo('');
+        }
+    };
+    const handleDeleteTodo = async (id) => {
+        const confirmed = await Swal.fire({
+            title: 'Are you sure?',
+            text: 'This will permanently delete the task.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'No, cancel!',
+        });
+    
+        if (confirmed.isConfirmed) {
+            dispatch(removeTodo(token, id));
+            Swal.fire({
+                title: 'Deleted!',
+                text: 'Your task has been deleted.',
+                icon: 'success',
+            });
+        } else {
+            Swal.fire({
+                title: 'Cancelled',
+                text: 'Your task is safe.',
+                icon: 'info',
+            });
+        }
+    };
+
+    const handleCheckboxChange = async (todo) => {
+        const confirmed = await Swal.fire({
+            title: `Mark task "${todo.name}" as ${!todo.done ? 'done' : 'not done'}?`,
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Yes',
+            cancelButtonText: 'No',
+        });
+    
+        if (confirmed.isConfirmed) {
+            dispatch(changeTodo(todo._id, { done: true }, token));
+            Swal.fire({
+                title: 'Success!',
+                text: `Task marked as ${!todo.done ? 'done' : 'not done'}.`,
+                icon: 'success',
+            });
+        }
+    };
+    
 
     return (
         <div className="todos-container">
@@ -33,9 +97,16 @@ const Home = ({isLoggedIn}) => {
                                         <input
                                             type="checkbox"
                                             className="todo-checkbox"
-                                            defaultChecked={todo.done}
+                                            checked={todo.done}
+                                            onChange={() => handleCheckboxChange(todo)}
                                         />
                                         <h3 className="data-name">{todo.name}</h3>
+                                        <button
+                                            className="delete-btn"
+                                            onClick={() => handleDeleteTodo(todo._id)}
+                                        >
+                                            Delete
+                                        </button>
                                     </div>
                                     <p className="data-created">
                                         Created at: {new Intl.DateTimeFormat('en-US', {
@@ -62,8 +133,13 @@ const Home = ({isLoggedIn}) => {
                     )}
                 </div>
                 <div className="todos-input">
-                    <input type="text" placeholder="Add Todo..." />
-                    <button type="submit" className="btn-todos">Add</button>
+                    <input
+                        type="text"
+                        placeholder="Add Todo..."
+                        value={newTodo}
+                        onChange={(e) => setNewTodo(e.target.value)}
+                        />
+                    <button onClick={handleAddTodo} type="submit" className="btn-todos">Add</button>
                 </div>
             </div>
         </div>

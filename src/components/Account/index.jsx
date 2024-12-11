@@ -4,6 +4,7 @@ import imgAccount from '../../assets/img/account.png';
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProfile, performLogout } from "../../app/features/Auth/actions";
 import { useNavigate } from "react-router-dom";
+import Swal from 'sweetalert2';
 
 
 const Account = ({ setIsLoggedIn }) => {
@@ -42,15 +43,31 @@ const Account = ({ setIsLoggedIn }) => {
     // handle Logout
     const handleLogout = async () => {
         try {
-            await dispatch(performLogout());
-            setIsLoggedIn(false);
-            navigate('/login');
+            const confirmed = await Swal.fire({
+                title: `Logout?`,
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'Yes',
+                cancelButtonText: 'No',
+            });
+        
+            if (confirmed.isConfirmed) {
+                await dispatch(performLogout());
+                setIsLoggedIn(false);
+                Swal.fire({
+                    title: 'Success!',
+                    text: `Logout Succesfully'}.`,
+                    icon: 'success',
+                });
+                navigate('/login');
+            }
+            
+            
+            
         } catch (error) {
             console.error('Logout failed:', error);
         }
     };
-    const confirmLogout = () => setShowConfirm(true);
-    const cancelLogout = () => setShowConfirm(false);
 
     // handle link
 const handleStatusClick = () => {
@@ -82,7 +99,7 @@ const handleAccountDetailClick = () => {
                         <li><button onClick={handleStatusClick} className="account-status">Status List</button></li>
                         <li><button className="account-feedback">Give feedback</button></li>
                         <li><button className="account-about">About</button></li>
-                        <li><button className="account-logout" onClick={confirmLogout}>Sign out</button></li>
+                        <li><button className="account-logout" onClick={handleLogout}>Sign out</button></li>
                         <li className="account-footer">
                             <a href="https://">Privacy</a>
                             <a href="https://">Terms</a>
@@ -90,7 +107,7 @@ const handleAccountDetailClick = () => {
                         </li>
                     </ul>
                 </div> )}
-            {showConfirm && (
+            {/* {showConfirm && (
                 <div className="modal-overlay">
                     <div className="modal">
                         <p>Are you sure you want to logout?</p>
@@ -98,7 +115,7 @@ const handleAccountDetailClick = () => {
                         <button onClick={cancelLogout} className="cancel-button">No</button>
                     </div>
                 </div>
-            )}
+            )} */}
         </div>
     )
 }
