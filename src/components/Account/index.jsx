@@ -13,8 +13,6 @@ const Account = ({ setIsLoggedIn }) => {
     const dispatch = useDispatch();
     const profile = useSelector(state => state.auth.user);
     const navigate = useNavigate();
-    // const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
-    const [showConfirm, setShowConfirm] = useState(false);
 
     // fetch profile
     useEffect(() =>{

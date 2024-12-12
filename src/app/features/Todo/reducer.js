@@ -35,7 +35,10 @@ export default function todosReducer(state = initialState, {type, payload}) {
         case START_UPDATING_TODO:
             return { ...state, status: statusList.process };
         case SUCCESS_UPDATING_TODO:
-            return {...state, todos: state.todos.map((todo) => todo._id === payload._id ? payload : todo),};
+            const updatedData = state.data.map((todo) =>
+                todo._id === payload._id ? payload : todo
+            );
+            return { ...state, status: statusList.success, data: updatedData };
         case ERROR_UPDATING_TODO:
             return { ...state, status: statusList.error };
         default:

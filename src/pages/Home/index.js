@@ -71,7 +71,7 @@ const Home = ({isLoggedIn}) => {
         });
     
         if (confirmed.isConfirmed) {
-            dispatch(changeTodo(todo._id, { done: true }, token));
+            dispatch(changeTodo(todo._id, { done: !todo.done }, token));
             Swal.fire({
                 title: 'Success!',
                 text: `Task marked as ${!todo.done ? 'done' : 'not done'}.`,

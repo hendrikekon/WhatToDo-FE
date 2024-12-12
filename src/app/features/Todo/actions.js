@@ -102,7 +102,6 @@ export const changeTodo = (id, data, token) => {
     return async (dispatch) => {
         dispatch(startUpdatingTodo());
         try {
-            console.log('change Todo Received: ', id, data, token);
             const response = await updateTodo(id, token, data);
             dispatch(successUpdatingTodo(response.data.data));
         } catch (error) {

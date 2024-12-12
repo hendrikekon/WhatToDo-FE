@@ -42,11 +42,12 @@ export const deleteTodo = async(token, id) => {
     }
 };
 
-export const updateTodo = async(id, data, token) => {
+export const updateTodo = async(id, token, data) => {
     try {
-        console.log('UpdateTodo Received: ', id, data, token);
         return await axios.patch(`${config.apiBaseUrl}/api/todos/${id}`, data, {
-            headers: { Authorization: `Bearer ${token}` },
+            headers: { 
+                Authorization: `Bearer ${token}` 
+            },
         });
     } catch (error) {
         console.error('Error Updating Todo:', error);
