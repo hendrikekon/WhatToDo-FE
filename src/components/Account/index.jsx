@@ -54,7 +54,7 @@ const Account = ({ setIsLoggedIn }) => {
                 setIsLoggedIn(false);
                 Swal.fire({
                     title: 'Success!',
-                    text: `Logout Succesfully'}.`,
+                    text: `Logout Succesfully.`,
                     icon: 'success',
                 });
                 navigate('/login');
@@ -69,7 +69,7 @@ const Account = ({ setIsLoggedIn }) => {
 
     // handle link
 const handleStatusClick = () => {
-    navigate('/order')
+    navigate('/statuslist')
 }
 
 const handleAccountDetailClick = () => {

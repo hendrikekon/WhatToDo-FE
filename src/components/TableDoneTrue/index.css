@@ -1,0 +1,26 @@
+.table-container {
+    margin: 20px auto;
+    max-width: 800px;
+    overflow-x: auto;
+}
+.custom-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+.custom-table th, .custom-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+.custom-table th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+}
+.done-cell {
+    text-align: center;
+}
+.no-data {
+    text-align: center;
+    font-style: italic;
+    color: #666;
+}

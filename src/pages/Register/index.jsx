@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { NavLink, useNavigate } from "react-router-dom";
 import './index.css';
 import { registerUser } from "../../app/api/auth";
+import Swal from 'sweetalert2';
 
 const RegistrationForm = () => {
     const {
@@ -13,23 +14,24 @@ const RegistrationForm = () => {
     } = useForm();
 
     const navigate = useNavigate();
-    const [successMessage, setSuccesMessage] = useState(false);
-    const [errorMessage, setErrorMessage] = useState(false);
-
-    const confirmError = () => setErrorMessage(false);
-
-    const navLogin = () => {
-        navigate('/login');
-    }
 
     const onSubmit = async(data) => {
         try {
             const response = await registerUser(data);
+            Swal.fire({
+                title: 'Success!',
+                text: `Registeration Successfull.`,
+                icon: 'success',
+            });
             console.log('Registration Successful', response);
-            setSuccesMessage(true);
+            navigate('/login');
         } catch (error) {
-            setErrorMessage(true);
             console.error('Registration Failed', error);
+            Swal.fire({
+                title: 'Failed!',
+                text: `Registeration failed or email already registered. Please try again.`,
+                icon: 'error',
+            });
         }
     };
 
@@ -41,22 +43,6 @@ const RegistrationForm = () => {
             handleSubmit(onSubmit)();
         }} className="register-form">
             <h2 className="Register">Register</h2>
-            {successMessage && (
-                <div className="modal-overlay">
-                    <div className="modal">
-                        <p>Registerasi berhasil. Silahkan login</p>
-                        <button onClick={navLogin} className="confirm-button" type="button">Login</button>
-                    </div>
-                </div>
-            )}
-            {errorMessage && (
-                <div className="modal-overlay">
-                    <div className="modal">
-                        <p>Registerasi gagal atau email sudah terdaftar. silahkan coba lagi</p>
-                        <button onClick={confirmError} className="cancel-button" type="button">Coba Lagi</button>
-                    </div>
-                </div>
-            )}
             <div className="form-group">
                 <label htmlFor="username">Name:</label>
                 <input
@@ -102,7 +88,7 @@ const RegistrationForm = () => {
             <div className="form-group">
                 <label htmlFor="confirm_password">Confirm Password:</label>
                 <input
-                    type="passowrd"
+                    type="password"
                     id="confirm_password"
                     {...register("confirm_password", {
                     required: "Confirm Password is required",

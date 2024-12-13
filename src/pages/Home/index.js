@@ -3,6 +3,7 @@ import { addTodo, changeTodo, fetchTodos, removeTodo } from "../../app/features/
 import { useDispatch, useSelector } from "react-redux";
 import './index.css';
 import Swal from 'sweetalert2';
+import formatDate from "../../utils/DateFormat";
 
 
 const Home = ({isLoggedIn}) => {
@@ -74,7 +75,8 @@ const Home = ({isLoggedIn}) => {
             dispatch(changeTodo(todo._id, { done: !todo.done }, token));
             Swal.fire({
                 title: 'Success!',
-                text: `Task marked as ${!todo.done ? 'done' : 'not done'}.`,
+                text: `Task marked as ${!todo.done ? 'done' : 'not done'}, 
+                Please check Status List.`,
                 icon: 'success',
             });
         }
@@ -90,8 +92,8 @@ const Home = ({isLoggedIn}) => {
                             <div className="loader"></div>
                         ) : noTodosFound || todos.length === 0 ? (
                             <p className="no-todos-message">No Products Found</p>
-                        ) : todos.length > 0 ? (
-                            todos.map((todo) => (
+                        ) : todos.filter(todo => !todo.done).length > 0 ? (
+                            todos.filter(todo => !todo.done).map((todo) => (
                                 <div className="card-data" key={todo._id}>
                                     <div className="todo-item">
                                         <input
@@ -101,28 +103,17 @@ const Home = ({isLoggedIn}) => {
                                             onChange={() => handleCheckboxChange(todo)}
                                         />
                                         <h3 className="data-name">{todo.name}</h3>
+                                        <p className="data-created">
+                                            {formatDate(todo.createdAt)}
+                                        </p>
                                         <button
                                             className="delete-btn"
                                             onClick={() => handleDeleteTodo(todo._id)}
                                         >
-                                            Delete
+                                            ❌
                                         </button>
                                     </div>
-                                    <p className="data-created">
-                                        Created at: {new Intl.DateTimeFormat('en-US', {
-                                            year: 'numeric',
-                                            month: 'long',
-                                            day: 'numeric',
-                                        }).format(new Date(todo.createdAt))}
-                                    </p>
-                                    <p className="data-updated">
-                                        Updated at: {new Intl.DateTimeFormat('en-US', {
-                                            year: 'numeric',
-                                            month: 'long',
-                                            day: 'numeric',
-                                        }).format(new Date(todo.updatedAt))}
-                                    </p>
-
+                                    
                                 </div>
                             ))
                         ) : (
