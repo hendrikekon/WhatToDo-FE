@@ -42,3 +42,17 @@ export const getProfile = async () => {
         }
     });
 };
+
+export const updateProfileApi = async (id, data) => {
+    // const token = localStorage.getItem('auth')? JSON.parse(localStorage.getItem('auth')).token : null;
+    // if (!token) {
+    //     throw new Error('No token found');
+    // }
+    console.log('Updating profile api id: ', id);
+    console.log('Updating profile api Data: ', data);
+    return await axios.patch(`${config.apiBaseUrl}/auth/users/${id}`, data, {
+        // headers: {
+        //     'Authorization': `Bearer ${token}`
+        // }
+    });
+}

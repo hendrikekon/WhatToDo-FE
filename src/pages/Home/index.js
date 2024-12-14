@@ -91,7 +91,7 @@ const Home = ({isLoggedIn}) => {
                         isLoading ? (
                             <div className="loader"></div>
                         ) : noTodosFound || todos.length === 0 ? (
-                            <p className="no-todos-message">No Products Found</p>
+                            <p className="no-todos-message">There is no task you must do</p>
                         ) : todos.filter(todo => !todo.done).length > 0 ? (
                             todos.filter(todo => !todo.done).map((todo) => (
                                 <div className="card-data" key={todo._id}>

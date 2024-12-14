@@ -1,5 +1,5 @@
 import {USER_LOGIN, USER_LOGOUT, SET_PROFILE} from './constants';
-import { loginUser, logoutUser, getProfile } from '../../api/auth';
+import { loginUser, logoutUser, getProfile, updateProfileApi } from '../../api/auth';
 
 export const userLogin = (payload) => ({
     type: USER_LOGIN,
@@ -48,3 +48,15 @@ export const fetchProfile = () => {
         }
     }
 }
+
+// export const updateProfile = (id, data) => async (dispatch) => {
+//     try {
+//         console.log('Updating profile id: ', id);
+//         console.log('Updating profile Data: ', data);
+//         const response = await updateProfileApi(id, data);
+//         dispatch(setProfile(response.data));
+//     } catch (error) {
+//         console.error('Profile update error', error);
+//         throw error;
+//     }
+// };

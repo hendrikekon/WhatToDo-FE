@@ -22,7 +22,6 @@ const Account = ({ setIsLoggedIn }) => {
     // handle popup menu
     useEffect(() => {
         document.addEventListener('mousedown', handleClickOutside);
-
         return () => {
             document.removeEventListener('mousedown', handleClickOutside);
         };
@@ -51,13 +50,14 @@ const Account = ({ setIsLoggedIn }) => {
         
             if (confirmed.isConfirmed) {
                 await dispatch(performLogout());
-                setIsLoggedIn(false);
+                setIsLoggedIn(false)
+                navigate('/login');
                 Swal.fire({
                     title: 'Success!',
                     text: `Logout Succesfully.`,
                     icon: 'success',
                 });
-                navigate('/login');
+                
             }
             
             
@@ -68,13 +68,15 @@ const Account = ({ setIsLoggedIn }) => {
     };
 
     // handle link
-const handleStatusClick = () => {
-    navigate('/statuslist')
-}
+    const handleStatusClick = () => {
+        navigate('/statuslist');
+        setShowPopup(!showPopup);
+    }
 
-const handleAccountDetailClick = () => {
-    navigate('/accountdetail')
-}
+    const handleAccountDetailClick = () => {
+        navigate('/accountdetail');
+        setShowPopup(!showPopup);
+    }
 
 
     return(

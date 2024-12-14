@@ -24,7 +24,7 @@ const Table = ({ data }) => {
                         ))
                     ) : (
                         <tr>
-                            <td colSpan="3" className="no-data">No Data Available</td>
+                            <td colSpan="3" className="no-data">No Task Available</td>
                         </tr>
                     )}
                 </tbody>

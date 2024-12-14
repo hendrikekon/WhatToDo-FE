@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { BrowserRouter, Routes, Route } from'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
-import { Home, Login, Register, StatusList } from './pages'
+import { AccountDetail, Home, Login, Register, StatusList } from './pages'
 
 
 function App() {
@@ -17,6 +17,7 @@ function App() {
             <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn}/>} />
             <Route path="/register" element={<Register />} />
             <Route path="/statuslist" element={<StatusList isLoggedIn={isLoggedIn}/>} />
+            <Route path="/accountdetail" element={<AccountDetail />} />
           </Routes>
         <Footer />
       </BrowserRouter>
