@@ -26,7 +26,7 @@ const Home = ({isLoggedIn}) => {
                 name: newTodo,
                 done: false,
             };
-            console.log('Home: ', data);
+            // console.log('Home: ', data);
             dispatch(addTodo(token, data));
             Swal.fire({
                 title: 'Task Added!',

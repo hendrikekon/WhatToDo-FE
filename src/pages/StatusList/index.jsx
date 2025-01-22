@@ -15,7 +15,7 @@ const StatusList = (isLoggedIn) => {
             dispatch(fetchTodos(token));
         }
     }, [dispatch, isLoggedIn, token]);
-        console.log('todos: ', todos)
+        // console.log('todos: ', todos)
     return(
         <div className="StatusList-container">
             <h2>Task List</h2>
